@@ -13,6 +13,7 @@ class Playlist extends Component {
     }
 
     componentWillMount() {
+        console.log(this.props.actions);
         this.props.actions.searchSpotify('users/' + this.props.profile.data.id + '/playlists', this.props.spotify.token);
     }
 

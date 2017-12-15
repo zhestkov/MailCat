@@ -17,7 +17,7 @@ class NewReleases extends Component {
     }
 
     render() {
-        const { spotify, actions } = this.props;
+        const { spotify } = this.props;
         return (
             <div className='text-center'>
                 {
