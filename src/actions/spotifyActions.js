@@ -53,12 +53,7 @@ export function searchSpotify(partUrl, token, query='', type='') {
                 return response;
             })
             .then((response) => response.json())
-            .then((items) => {
-                    console.log('ITEMS:');
-                    console.log(items);
-                    dispatch(spotifySuccess(items))
-                }
-            )
+            .then((items) => dispatch(spotifySuccess(items)))
             .catch((error) => dispatch(spotifyFailure(error)));
     };
 }
