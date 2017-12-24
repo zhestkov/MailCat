@@ -1,26 +1,23 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { AppContainer } from 'react-hot-loader';
-// import './index.css';
-import { createStore, applyMiddleware} from 'redux';
-import { Provider } from 'react-redux';
-import App from './App';
-import { history } from './utils/history';
-import { store } from './utils/configureStore';
+import createHistory from 'history/createBrowserHistory';
+
+import Routes from './Routes'; // eslint-disable-line
+const history = createHistory();
 
 const render = Component => {
   ReactDOM.render(
     <AppContainer>
-
-            <Component history={ history }/>
+      <Component history={ history } />
     </AppContainer>,
-    document.getElementById('root'),
-  )
+    document.getElementById('root')
+  );
 };
+render(Routes);
 
-render(App);
 
 // Webpack Hot Module Replacement API
 if (module.hot) {
-  module.hot.accept('./App', () => { render(App) })
+  module.hot.accept('./', () => { render(Routes); });
 }

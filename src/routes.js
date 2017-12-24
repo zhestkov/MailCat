@@ -1,24 +1,33 @@
-import React from 'react';
-import { Route, Switch} from 'react-router';
-import Home from './containers/Home';
-import App from './components/App';
-import Callback from "./containers/Callback";
-import Playlist from "./containers/Playlist";
-import NewReleases from "./containers/NewReleases";
-import TrackList from "./containers/TrackList";
-// import { BrowserRouter }  from 'react-router-dom';
+import React, { Component } from 'react';
+import { Switch, Route } from 'react-router';
+import { BrowserRouter } from 'react-router-dom';
+import { Provider } from 'react-redux';
+import { store } from './store/configureStore';
 
-export const routes = (
-    <Switch>
-        <App>
-            <Route exact='/' component={Home}/>
-            <Route exact path='/playlists' component={Playlist}/>
-            <Route path='/playlists/:ids' component={TrackList}/>
-            <Route path='/releases' component={NewReleases}/>
-            <Route path='/login/callback' component={Callback} />
-        </App>
-    </Switch>
 
-);
+import Common from './components/Common/component';
+import Home  from './components/Home/';
+import FaqPage from './components/FAQ/FaqPage';
 
-export default routes;
+export class Routes extends Component {
+  render() {
+    return (
+        <Provider store={store}>
+            <BrowserRouter history={this.props.history}>
+                <Switch>
+                    <Common>
+                        <Route exact path='/' component={Home}/>
+                        <Route path='/faq' component={FaqPage} />
+                    </Common>
+                </Switch>
+            </BrowserRouter>
+        </Provider>
+    );
+  }
+}
+
+export default Routes;
+
+// export default connect(mapStateToProps)(Routes);
+// export { Routes };
+

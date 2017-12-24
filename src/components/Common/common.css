@@ -1,0 +1,76 @@
+#learning-threshold-slider .slider-selection {
+    background: #BABABA;
+}
+/*@font-face {*/
+    /*font-family: 'MailcatFontRegular';*/
+    /*src: url("../fonts/HelveticaNeueCyr-Light.otf");*/
+/*format('opentype');*/
+/*}*/
+/*@font-face {*/
+    /*font-family: 'MailcatFontBold';*/
+    /*src: url("../fonts/LT_1.ttf");*/
+/*format('truetype');*/
+/*}*/
+p{
+
+    font-size: 130%;
+}
+p1 {
+    font-family: "MailcatFontBold", "HelveticaNeue LT CYR 57 Cond", "HelveticaNeueLT Std Med", "Arial", sans-serif;
+    font-size: 200%;
+}
+/*.in {*/
+/*opacity: 0.9;*/
+/*}*/
+#logo{
+    width: 32px;
+    height: 32px;
+    border-radius: 10px;
+}
+#inbox-head{
+    padding-top: 50px;
+    padding-bottom: 50px;
+    /*background: #EEEEEE url(../img/inbox-head.jpg) no-repeat fixed center top;*/
+}
+#inbox-list{
+    margin-bottom: 50px;
+}
+#test{
+    margin-bottom: 50px;
+}
+
+.form-group {
+    margin-bottom: 8px;
+    height: 38px;
+}
+.slider-group .col{
+    padding-top: 6px;
+    padding-bottom: 6px;
+}
+
+html {
+    position: relative;
+    min-height: 100%;
+}
+body{
+    overflow-y:scroll;
+}
+footer {
+    background-color: #eeeeee;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    height: auto;
+    width: 100%;
+    overflow: hidden;
+    text-align: center;
+    font-size: 75%;
+    padding: 5px;
+    color: #999;
+}
+::selection {
+    background: #cee9ff; /* WebKit/Blink Browsers */
+}
+::-moz-selection {
+    background: #cee9ff; /* Gecko Browsers */
+}

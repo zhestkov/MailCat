@@ -1,15 +1,23 @@
 export const initialState = {
-    spotify: {
-        token: '',
-        loading: false,
+    config: {
+        auth: {
+            host: '',
+            port: '',
+            login: '',
+            password: '',
+        },
+        learningThreshold: 50,
+        categories: [],
+    },
+    response: {
+        fetching: false,
         error: null,
         data: {},
     },
-    profile: {
-        loading: false,
+    messages: {
+        fetching: false,
         error: null,
-        data: {}
-    },
-    search: {}
+        data: []
+    }
 };
 export default initialState;
