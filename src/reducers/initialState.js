@@ -9,7 +9,7 @@ export const initialState = {
         learningThreshold: 50,
         categories: [],
     },
-    response: {
+    folders: {
         fetching: false,
         error: null,
         data: {},

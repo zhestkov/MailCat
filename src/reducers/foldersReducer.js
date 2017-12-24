@@ -1,21 +1,22 @@
 import initialState from './initialState';
+import * as types from '../actions/_types';
 
-const responseReducer = (state = initialState.response, action) => {
+const foldersReducer = (state = initialState.folders, action) => {
     switch (action.type) {
-        case 'RESPONSE_REQUEST':
+        case types.FOLDERS_REQUEST:
             return {
                 ...state,
                 fetching: true,
                 error: null,
             };
-        case 'RESPONSE_SUCCESS':
+        case types.FOLDERS_SUCCESS:
             return {
                 ...state,
                 fetching: false,
                 error: null,
                 data: action.data,
             };
-        case 'RESPONSE_FAILURE':
+        case types.FOLDERS_FAILURE:
             return {
                 ...state,
                 fetching: false,
@@ -26,4 +27,4 @@ const responseReducer = (state = initialState.response, action) => {
     }
 };
 
-export default responseReducer;
+export default foldersReducer;

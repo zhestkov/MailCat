@@ -2,8 +2,9 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import { PulseLoader } from 'halogenium';
 import * as configActions from '../../actions/configActions';
-import * as responseActions from '../../actions/responseActions';
+import * as foldersActions from '../../actions/foldersActions';
 import * as messageActions from '../../actions/messageActions';
 import './common.css';
 import * as apis from '../../utils/api_list';
@@ -72,14 +73,13 @@ class Common extends Component {
         console.log('toSend:');
         console.log(toSend);
         //const res = apis.getFolders(toSend);
-        this.props.actions.request(apis.API_POST_FOLDERS, 'POST', {
+        this.props.actions.getFolders(apis.API_POST_FOLDERS, 'POST', {
             'Accept': 'application/json',
             'Content-Type': 'application/json'
         }, toSend);
 
     }
     initialize() {
-        const {actions} = this.props;
         const {config} = this.props;
         const url = `http://localhost:8080/${apis.API_POST_INIT}`;
         const toSend = {
@@ -124,9 +124,9 @@ class Common extends Component {
 
     }
     render() {
-        const { response } = this.props;
-        const foldersList = Object.keys(response.data).map((key, index) =>
-            <FolderItem folderName={response.data[key].name} key={index}/>
+        const { folders } = this.props;
+        const foldersList = Object.keys(folders.data).map((key, index) =>
+            <FolderItem folderName={folders.data[key].name} key={index}/>
         );
         return (
             <div className='app-container'>
@@ -212,7 +212,11 @@ class Common extends Component {
                             <div className='folders-container'>
                                 <ul className='list-group'>
                                     {
-                                    response.data&& foldersList
+                                        folders.fetching &&
+                                            <PulseLoader className='loading-spinner' color="#26A65B" size="12px" margin="4px"/>
+                                    }
+                                    {
+                                    folders.data&& foldersList
                                     }
                                 </ul>
 
@@ -222,7 +226,7 @@ class Common extends Component {
                                 <button type="button" className="btn btn-secondary" data-dismiss="modal">Cancel</button>
                                 <button type="button" className="btn btn-primary" onClick={this.saveSettings}>OK</button>
                                 {
-                                    (Object.keys(response.data).length > 0) &&
+                                    (Object.keys(folders.data).length > 0) &&
                                     <button type="button" className="btn btn-success" data-dismiss="modal" onClick={this.initialize}>Run MailCat</button>
                                 }
                             </div>
@@ -249,17 +253,17 @@ class Common extends Component {
 }
 
 const mapStateToProps = (state) => {
-    const { config, response, messages } = state;
+    const { config, folders, messages } = state;
     return {
         config,
-        response,
+        folders,
         messages
     }
 };
 
 const mapDispatchToProps = (dispatch) => {
     const actions = {
-        ...responseActions,
+        ...foldersActions,
         ...configActions,
         ...messageActions,
     };

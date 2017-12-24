@@ -26,6 +26,7 @@ p1 {
     width: 32px;
     height: 32px;
     border-radius: 10px;
+    margin-right: 5px;
 }
 #inbox-head{
     padding-top: 50px;
@@ -73,4 +74,8 @@ footer {
 }
 ::-moz-selection {
     background: #cee9ff; /* Gecko Browsers */
+}
+
+.loading-spinner {
+    padding-left: 40%;
 }

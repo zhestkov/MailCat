@@ -12,7 +12,7 @@ class FolderItem extends Component {
     }
 
     toggleItem() {
-        const { folderName, actions } = this.props;
+        const { folderName } = this.props;
         this.setState({active: !this.state.active});
         if (!this.state.active) {
             console.log(`ADDING CATEGORY...`);
@@ -37,10 +37,10 @@ class FolderItem extends Component {
 }
 
 const mapStateToProps = (state) => {
-    const { config, response } = state;
+    const { config, folders } = state;
     return {
         config,
-        response,
+        folders,
     }
 };
 

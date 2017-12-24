@@ -21,15 +21,32 @@ export class HomePage extends Component {
                         {/*</div>*/}
                     </div>
                     <div className="container" id="inbox-list">
-                        <ul>
-                            {
-                                messages.data.length > 0 && messages.data.map((msg, index) =>
-                                <li>Sender: {msg.sender}, Subject: {msg.subject}, newCategory: {msg.category}</li>
-                                )
-                            }
-                        </ul>
 
-                    </div>
+                        {
+                            messages.data.length > 0 &&
+
+                            <table className='table table-striped'>
+                                <thead>
+                                <tr>
+                                    <th scope="col">Sender</th>
+                                    <th scope="col">Subject</th>
+                                    <th scope="col">Moved to</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {
+                                    messages.data.map((msg, index) =>
+                                        <tr>
+                                            <th scope="row">{msg.sender}</th>
+                                            <td>{msg.subject}</td>
+                                            <td>{msg.category}</td>
+                                        </tr>
+                                    )
+                                }
+                                </tbody>
+                            </table>
+                        }
+                        </div>
 
                     {/*<div className="container" id="test">*/}
                         {/*<button className="btn btn-dark" id="test-btn">Add New</button>*/}
