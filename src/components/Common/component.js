@@ -206,7 +206,7 @@ class Common extends Component {
                                             max={50}
                                             step={1}
                                             onChange={this.handleTreshold}
-
+                                            disabled={folders.fetching ? true : false}
                                         />
                                     </div>
                                 </div>
@@ -226,8 +226,8 @@ class Common extends Component {
                             </div>
 
                             <div className="modal-footer">
-                                <button type="button" className={folders.fetching ? 'btn btn-secondary disabled' : 'btn btn-secondary'} data-dismiss="modal">Cancel</button>
-                                <button type="button" className={folders.fetching ? 'btn btn-btn-primary disabled' : 'btn btn-primary'} onClick={this.saveSettings}>OK</button>
+                                <button type="button" disabled={folders.fetching ? true : false} className='btn btn-secondary' data-dismiss="modal">Cancel</button>
+                                <button type="button" disabled={folders.fetching ? true : false} className='btn btn-primary' onClick={this.saveSettings}>OK</button>
                                 {
                                     (Object.keys(folders.data).length > 0) &&
                                     <button type="button" className="btn btn-success" data-dismiss="modal" onClick={this.initialize}>Run MailCat</button>
