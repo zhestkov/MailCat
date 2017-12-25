@@ -9,6 +9,8 @@ import * as messageActions from '../../actions/messageActions';
 import './common.css';
 import * as apis from '../../utils/api_list';
 import FolderItem from './folderItem'
+import Slider from 'rc-slider';
+import 'rc-slider/assets/index.css';
 
 const FETCH_MESSAGES_INTERVAL = 6000;
 
@@ -18,9 +20,9 @@ class Common extends Component {
         this.state = {
             emailInput: '',
             passwordInput: '',
-            hostInput: '',
-            portInput: '',
-            tresholdInput: '',
+            hostInput: 'imap.gmail.com',
+            portInput: 993,
+            tresholdInput: 50,
         };
         this.saveSettings = this.saveSettings.bind(this);
         this.handleEmail = this.handleEmail.bind(this);
@@ -45,8 +47,8 @@ class Common extends Component {
     handlePort(event) {
         this.setState({portInput: event.target.value});
     }
-    handleTreshold(event) {
-        this.setState({tresholdInput: event.target.value});
+    handleTreshold(value)  {
+        this.setState({tresholdInput: value});
     }
 
     saveSettings() {
@@ -70,9 +72,6 @@ class Common extends Component {
             port: new_config.auth.port
         };
 
-        console.log('toSend:');
-        console.log(toSend);
-        //const res = apis.getFolders(toSend);
         this.props.actions.getFolders(apis.API_POST_FOLDERS, 'POST', {
             'Accept': 'application/json',
             'Content-Type': 'application/json'
@@ -90,8 +89,6 @@ class Common extends Component {
             host: config.auth.host,
             port: config.auth.port
         };
-        console.log('init toSend:');
-        console.log(JSON.stringify(toSend));
 
         fetch(
             url, {
@@ -124,7 +121,7 @@ class Common extends Component {
 
     }
     render() {
-        const { folders } = this.props;
+        const { folders, config } = this.props;
         const foldersList = Object.keys(folders.data).map((key, index) =>
             <FolderItem folderName={folders.data[key].name} key={index}/>
         );
@@ -201,10 +198,16 @@ class Common extends Component {
                                 </div>
 
                                 <div className="form-group row slider-group">
-                                    <div className="col-sm-6">Learning Threshold: <span id="learning-slider-value">30</span></div>
+                                    <div className="col-sm-6">Learning Threshold: <span id="learning-slider-value">{this.state.tresholdInput}</span></div>
                                     <div className="col-sm-6 col-xs-12">
-                                        <input id="count-slider" data-slider-min="10" data-slider-max="50" data-slider-step="1" data-slider-value="30" data-slider-id="learning-threshold-slider" type="text" value="30"
-                                               value={this.state.tresholdInput} onChange={this.handleTreshold} />
+                                        <Slider
+                                            defaultValue={config.learningThreshold}
+                                            min={0}
+                                            max={50}
+                                            step={1}
+                                            onChange={this.handleTreshold}
+
+                                        />
                                     </div>
                                 </div>
                             </div>
@@ -223,8 +226,8 @@ class Common extends Component {
                             </div>
 
                             <div className="modal-footer">
-                                <button type="button" className="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                                <button type="button" className="btn btn-primary" onClick={this.saveSettings}>OK</button>
+                                <button type="button" className={folders.fetching ? 'btn btn-secondary disabled' : 'btn btn-secondary'} data-dismiss="modal">Cancel</button>
+                                <button type="button" className={folders.fetching ? 'btn btn-btn-primary disabled' : 'btn btn-primary'} onClick={this.saveSettings}>OK</button>
                                 {
                                     (Object.keys(folders.data).length > 0) &&
                                     <button type="button" className="btn btn-success" data-dismiss="modal" onClick={this.initialize}>Run MailCat</button>

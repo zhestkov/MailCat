@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Switch, Route } from 'react-router';
-import { BrowserRouter } from 'react-router-dom';
+import { Router } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { store } from './store/configureStore';
 
@@ -13,14 +13,14 @@ export class Routes extends Component {
   render() {
     return (
         <Provider store={store}>
-            <BrowserRouter history={this.props.history}>
+            <Router history={this.props.history}>
                 <Switch>
                     <Common>
                         <Route exact path='/' component={Home}/>
                         <Route path='/faq' component={FaqPage} />
                     </Common>
                 </Switch>
-            </BrowserRouter>
+            </Router>
         </Provider>
     );
   }
