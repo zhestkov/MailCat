@@ -1,9 +1,16 @@
 import React, { Component } from 'react';
 import './faq.css';
+import './animate.css';
+import WOW from './animation';
 
 export class FaqPage extends Component {
     constructor(props) {
         super(props);
+    }
+    componentDidMount() {
+        new WOW.WOW({
+            live: false
+        }).init();
     }
 
     render() {
