@@ -130,7 +130,7 @@ class Common extends Component {
                 <nav className="navbar sticky-top navbar-expand-sm navbar-dark bg-dark">
                     <div className="container">
                         <a className="navbar-brand text-light">
-                            <img src={require('../../img/mailcat.jpg')} id="logo" className="d-inline-block align-top" alt="" />
+                            <img src={require('../../img/mailcat.png')} id="logo" className="d-inline-block align-middle" alt="" />
                             MailCat
                         </a>
                         <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar7">

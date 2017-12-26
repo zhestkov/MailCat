@@ -22,10 +22,18 @@ p1 {
 /*.in {*/
 /*opacity: 0.9;*/
 /*}*/
+/*.navbar-brand{*/
+    /*vertical-align: middle;*/
+/*}*/
+#navbar7 {
+    padding-bottom: 10px;
+    padding-top: 5px;
+}
 #logo{
-    width: 32px;
-    height: 32px;
-    border-radius: 10px;
+    width: 40px;
+    height: 40px;
+    border-radius: 100px;
+    background-color: #343a40;
     margin-right: 5px;
 }
 #inbox-head{
