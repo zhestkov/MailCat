@@ -7,6 +7,11 @@ const configReducer = (state = initialState.config, action) => {
             return {
                 ...action.data
             };
+        case types.UPDATE_MAILCAT_STATE:
+            return {
+                ...state,
+                stopped: action.state,
+            };
         case types.ADD_CATEGORY: {
             const list = state.categories.slice();
             list.push(action.category);

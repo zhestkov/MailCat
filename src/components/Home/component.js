@@ -36,7 +36,7 @@ export class HomePage extends Component {
                                 <tbody>
                                 {
                                     messages.data.map((msg, index) =>
-                                        <tr>
+                                        <tr key={index}>
                                             <th scope="row">{msg.sender}</th>
                                             <td>{msg.subject}</td>
                                             <td>{msg.category}</td>

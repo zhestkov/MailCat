@@ -8,6 +8,7 @@ export const initialState = {
         },
         learningThreshold: 50,
         categories: [],
+        stopped: true,
     },
     folders: {
         fetching: false,

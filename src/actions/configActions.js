@@ -7,6 +7,13 @@ export function updateConfig(updated) {
     };
 }
 
+export function updateState(new_state) {
+    return {
+        type:types.UPDATE_MAILCAT_STATE,
+        state: new_state
+    }
+}
+
 export function addCategory(category) {
     return {
         type: types.ADD_CATEGORY,
@@ -20,10 +27,3 @@ export function removeCategory(category) {
         category: category
     }
 }
-
-// export function saveNewConfig(updated) {
-//     return (dispatch) => {
-//         dispatch(updateConfig(updated));
-//     }
-//
-// }

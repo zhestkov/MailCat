@@ -11,8 +11,9 @@ import * as apis from '../../utils/api_list';
 import FolderItem from './folderItem'
 import Slider from 'rc-slider';
 import 'rc-slider/assets/index.css';
+import { store } from '../../store/configureStore';
 
-const FETCH_MESSAGES_INTERVAL = 6000;
+const FETCH_MESSAGES_INTERVAL = 5000;
 
 class Common extends Component {
     constructor(props) {
@@ -32,6 +33,7 @@ class Common extends Component {
         this.handleTreshold = this.handleTreshold.bind(this);
         this.initialize = this.initialize.bind(this);
         this.getMessages = this.getMessages.bind(this);
+        this.shutdown = this.shutdown.bind(this);
 
     }
 
@@ -50,6 +52,21 @@ class Common extends Component {
     handleTreshold(value)  {
         this.setState({tresholdInput: value});
     }
+    shutdown() {
+        const url = `http://localhost:8080/${apis.API_SHUTDOWN}`;
+        const headers = {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+        };
+        fetch(url, {
+            headers: headers,
+            method: 'POST',
+            mode: 'no-cors'
+        })
+            .then(() => console.log('Mailcat has been stopped successfully.'))
+            .then(() => this.props.actions.updateState(true))
+            .catch((error) => console.log(error))
+    }
 
     saveSettings() {
         const { config } = this.props;
@@ -62,6 +79,7 @@ class Common extends Component {
             },
             learningThreshold: this.state.tresholdInput,
             categories: [],
+            stopped: true
         };
         this.props.actions.updateConfig(new_config);
         const toSend = {
@@ -100,14 +118,21 @@ class Common extends Component {
                 body: JSON.stringify(toSend)
             })
             .then (() => console.log('Init config is sent successfully'))
+            .then(() => this.props.actions.updateState(false))
+            .then(() => console.log(store.getState()))
             .then (() => this.getMessages())
-            .catch(error => this.props.actions.mailcatFailure(error));
+            .catch(error => this.props.actions.messageFailure(error));
 
     }
 
     getMessages() {
-        const { actions } = this.props;
-        let timerId = setTimeout(function cycle() {
+        const { actions, config } = this.props;
+
+        let timerId = setTimeout(function step() {
+            if (config.stopped) {
+                clearTimeout(timerId);
+                return;
+            }
             actions.getMessages(
                 apis.API_GET_CATEGORIZED_LIST,
                 'GET',
@@ -115,10 +140,19 @@ class Common extends Component {
                     'Accept': 'application/json',
                 }
             );
-            timerId = setTimeout(cycle, FETCH_MESSAGES_INTERVAL);
+            timerId = setTimeout(step, FETCH_MESSAGES_INTERVAL);
         });
 
-
+        // let timerId = setInterval(function () {
+        //     actions.getMessages(
+        //         apis.API_GET_CATEGORIZED_LIST,
+        //         'GET',
+        //         {
+        //             'Accept': 'application/json',
+        //         }
+        //     );
+        //
+        // }, FETCH_MESSAGES_INTERVAL);
     }
     render() {
         const { folders, config } = this.props;
@@ -226,11 +260,17 @@ class Common extends Component {
                             </div>
 
                             <div className="modal-footer">
-                                <button type="button" disabled={folders.fetching ? true : false} className='btn btn-secondary' data-dismiss="modal">Cancel</button>
-                                <button type="button" disabled={folders.fetching ? true : false} className='btn btn-primary' onClick={this.saveSettings}>OK</button>
+                                {
+                                    (config.stopped) ?
+                                        (<button type="button" disabled={folders.fetching ? true : false} className='btn btn-secondary' data-dismiss="modal">Cancel</button>
+                                        ) : (
+                                            <button type="button" onClick={this.shutdown} className='btn btn-danger' data-dismiss="modal">Shutdown Mailcat</button>
+                                        )
+                                }
+                                <button type="button" disabled={(folders.fetching || !config.stopped) ? true : false} className='btn btn-primary' onClick={this.saveSettings}>OK</button>
                                 {
                                     (Object.keys(folders.data).length > 0) &&
-                                    <button type="button" className="btn btn-success" data-dismiss="modal" onClick={this.initialize}>Run MailCat</button>
+                                    <button type="button" disabled={!config.stopped ? true : false} className="btn btn-success" data-dismiss="modal" onClick={this.initialize}>Run MailCat</button>
                                 }
                             </div>
 
