@@ -1,6 +1,7 @@
 # Mailcat
 
-Email classifier. It supports all email service (Gmail, Yahoo, Yandex) which
+Intelligent Email classifier. The classification is based on content, subject, sender and some other message features.
+It supports all email service (Gmail, Yahoo, Yandex) which
 works through IMAP protocol.
 
 ## To run:
