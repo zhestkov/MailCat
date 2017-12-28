@@ -10,3 +10,14 @@ npm i
 java -jar mailcat-web-0.1-SNAPSHOT.jar
 npm start
 ```
+
+## Credits:
+
+```
+Georgy Zhemelev
+Evgeny Evseev
+Vladimir Novikov
+Denis Filippov
+Andrey Nechaev
+Andrey Zhestkov
+```
